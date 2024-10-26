@@ -16,4 +16,62 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.hibernate.tool</groupId>
+                <artifactId>hibernate-tools-maven</artifactId>
+                <version>6.2.6.Final</version>
+                <configuration>
+                    <packageName>com.commande.webapp.entity</packageName>
+                    <revengFile>src/main/resources/hibernate.reveng.xml</revengFile>
+                    <outputDirectory>src/main/java</outputDirectory>
+                    <ejb3>true</ejb3>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hibernate.tool</groupId>
+                        <artifactId>hibernate-tools-orm</artifactId>
+                        <version>6.2.6.Final</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.6.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>entity-generation</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>hbm2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>
