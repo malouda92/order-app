@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC
+        "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+    <schema-selection match-catalog="commande_db" match-schema="PUBLIC"/>
+    <type-mapping>
+        <!-- jdbc-type is name for java.sql.Types -->
+        <sql-type jdbc-type="VARCHAR" hibernate-type="java.lang.String" />
+        <sql-type jdbc-type="NUMERIC"  precision='4' hibernate-type="java.lang.Double" />
+        <sql-type jdbc-type="INTEGER"  precision='4' hibernate-type="java.lang.Integer" />
+    </type-mapping>
+    <table-filter match-name="flyway_schema_history" exclude="true"/>
+
+</hibernate-reverse-engineering>
