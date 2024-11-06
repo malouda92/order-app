@@ -1,0 +1,652 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    Ce contrat décrit les opérations disponibles pour les objets
+    - Client: représente l'objet contenant les informations des clients
+    - Commande: représente l'objet contenant les informations de commandes
+    - CommandeItem: représente l'objet contenant les items des commandes
+    - Produit: représente l'objet contenant les informations des produits
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: ramalomi@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://
+tags:
+  - name: client
+    description: Opérations sur l'objet client
+  - name: commande
+    description: Opérations sur l'objet commande
+  - name: commandeItem
+    description: Opérations sur l'objet commandeItem
+  - name: produit
+    description: Opérations sur l'objet produit
+paths:
+  /client:
+    get:
+      tags:
+        - client
+      summary: récupérer tous les clients
+      operationId: getClients
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    post:
+      tags:
+        - client
+      summary: Ajout d'un nouveau client
+      operationId: addClient
+      requestBody:
+        description: Creer un nouveau client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'          
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /client/{id}:
+    get:
+      tags:
+        - client
+      summary: Trouver un client à partir de son id
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          description: ID du client à récupérer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    put:
+      tags:
+        - client
+      summary: Modifier un client
+      operationId: updateClient
+      parameters:
+        - name: id
+          in: path
+          description: ID du client à modifier
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      requestBody:
+        description: Modifier un client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    delete:
+      tags:
+        - client
+      summary: Supprimer un client
+      operationId: deleteClient
+      parameters:
+        - name: id
+          in: path
+          description: ID du client à supprimer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '204': 
+          description: No content
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commande:
+    get:
+      tags:
+        - commande
+      summary: récupérer toutes les commandes
+      operationId: getCommandes
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Commande'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    post:
+      tags:
+        - commande
+      summary: Ajout d'une nouvelle commande
+      operationId: addCommande
+      requestBody:
+        description: Creer une nouvelle commande
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Commande'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Commande'          
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commande/client/{id}:
+    get:
+      tags:
+        - commande
+      summary: récupérer toutes les commandes d'un client
+      operationId: getCommandesByClient
+      parameters:
+        - name: id
+          in: path
+          description: ID du client
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Commande'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commande/produit/{id}:
+    get:
+      tags:
+        - commande
+      summary: récupérer toutes les commandes pour un produit
+      operationId: getCommandesByProduit
+      parameters:
+        - name: id
+          in: path
+          description: ID du produit
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Commande'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commande/{id}:
+    get:
+      tags:
+        - commande
+      summary: Trouver une commande à partir de son id
+      operationId: getCommandeById
+      parameters:
+        - name: id
+          in: path
+          description: ID de la commande à récupérer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    put:
+      tags:
+        - commande
+      summary: Modifier une commande
+      operationId: updateCommande
+      parameters:
+        - name: id
+          in: path
+          description: ID du client à modifier
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      requestBody:
+        description: Modifier une commande
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Commande'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Commande'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    delete:
+      tags:
+        - commande
+      summary: Supprimer une commande
+      operationId: deleteCommande
+      parameters:
+        - name: id
+          in: path
+          description: ID de la commande à supprimer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '204': 
+          description: No content
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commande/{id}/commandeItems:
+    get:
+      tags:
+        - commandeItem
+      summary: récupérer tous les commandeItems par commande
+      operationId: getCommandeItemsByCommande
+      parameters:
+        - name: id
+          in: path
+          description: ID de la commande
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommandeItem'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /commandeItem:
+    post:
+      tags:
+        - commandeItem
+      summary: Ajout d'un nouveau commandeItem
+      operationId: addCommandeItem
+      requestBody:
+        description: Creer un nouveau commandeItem
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandeItem'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeItem'          
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /produit:
+    get:
+      tags:
+        - produit
+      summary: récupérer tous les produits
+      operationId: getProduits
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produit'          
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    post:
+      tags:
+        - produit
+      summary: Ajout d'un nouveau produit
+      operationId: addProduit
+      requestBody:
+        description: Creer un nouveau produit
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produit'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'          
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+  /produit/{id}:
+    get:
+      tags:
+        - produit
+      summary: Trouver un produit à partir de son id
+      operationId: getProduitById
+      parameters:
+        - name: id
+          in: path
+          description: ID du produit à récupérer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    put:
+      tags:
+        - produit
+      summary: Modifier un produit
+      operationId: updateProduit
+      parameters:
+        - name: id
+          in: path
+          description: ID du produit à modifier
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      requestBody:
+        description: Modifier un produit
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produit'
+        required: true
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+    delete:
+      tags:
+        - produit
+      summary: Supprimer un produit
+      operationId: deleteProduit
+      parameters:
+        - name: id
+          in: path
+          description: ID du produit à supprimer
+          required: true
+          schema:
+            type: string
+            example: fae43088-87c7-417f-9e23-b9cd4a89802b
+      responses:
+        '204': 
+          description: No content
+        '400':
+          description: Paramètre invalide
+        '401':
+          description: Accès non autorisé
+        '403':
+          description: Opération non permise
+      security:
+        - app_auth:
+            - commande_scope
+components:
+  schemas:
+    Client:
+      type: object
+      required: [nom, prenom, adresse, telephone]
+      properties:
+        id:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+        nom:
+          type: string
+          example: Tremblay
+        prenom:
+          type: string
+          example: William
+        adresse:
+          type: string
+          example: "317 Rue Geaudreau"
+        telephone:
+          type: string
+          example: "+1(514)000-0000"
+    Commande:
+      type: object
+      required: [dateCommande, adresseLivraison]
+      properties:
+        id:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+        dateCommande:
+          type: string
+          example: "2024-10-26 00:00:00"
+        adresseLivraison:
+          type: string
+          example: "317 Rue Geaudreau"
+        idClient:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+    CommandeItem:
+      type: object
+      required: [idCommande, idProduit, quantite]
+      properties:
+        idCommande:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+        idProduit:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+        quantite:
+          type: integer
+    Produit:
+      type: object
+      required: [libelle, packaging, poids, unite]
+      properties:
+        id:
+          type: string
+          example: fae43088-87c7-417f-9e23-b9cd4a89802b
+        libelle:
+          type: string
+        packaging:
+          type: string
+          example: carton
+        poids:
+          type: number
+          example: 130.5
+        unite:
+          type: string
+          example: mg
+  securitySchemes:
+    app_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            commande_scope: scope pour l'application
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
