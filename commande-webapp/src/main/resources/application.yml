@@ -20,3 +20,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/Commande_realm
+          jwk-set-uri: http://localhost:8080/realms/Commande_realm/protocol/openid-connect/certs
