@@ -35,8 +35,14 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public Client updateClient(String id, Client clientUpdated) {
         Optional<Client> returnedClient = clientRepository.findById(id);
-        returnedClient.ifPresent();
-        return null;
+        returnedClient.ifPresent(client -> {
+            client.setNom(clientUpdated.getNom());
+            client.setPrenom(clientUpdated.getPrenom());
+            client.setAdresse(clientUpdated.getAdresse());
+            client.setTelephone(clientUpdated.getTelephone());
+            client.setCommandes(clientUpdated.getCommandes());
+        });
+        return returnedClient.orElse(null);
     }
 
     @Override
