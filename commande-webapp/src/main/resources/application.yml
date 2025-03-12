@@ -1,7 +1,9 @@
 server:
-  port: 8081
-
+  port: 8082
 spring:
+  web:
+    cors:
+      enabled=false:
   flyway:
     enabled: true
     location: classpath:db/migration
@@ -9,7 +11,7 @@ spring:
     baselineOnMigrate: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/commande_db
+    url: jdbc:postgresql://database:5432/commande_db
     username: admin
     password: admin
   jpa:

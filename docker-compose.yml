@@ -13,6 +13,8 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - mynetwork
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -41,19 +43,47 @@ services:
     depends_on:
       - db
     command: ["start-dev"]
+    networks:
+      - mynetwork
 
-#  app:
-#    depends_on:
-#      - db
-#    build: ./
-#    ports:
-#      - "8082:8082"
-#    volumes:
-#      - .m2:/root/.m2
-#    stdin_open: true
-#    tty: true
-#    env_file: ./.env
+  app:
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1"
+          memory: "512M"
+    expose:
+      - "8082"
+    depends_on:
+      - db
+    build: ./
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+    env_file: ./.env
+    networks:
+      - mynetwork
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - mynetwork
 
 volumes:
   database-data:
     driver: local
+
+networks:
+  mynetwork:
+    driver: bridge
