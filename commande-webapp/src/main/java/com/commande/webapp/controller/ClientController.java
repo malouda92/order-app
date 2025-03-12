@@ -18,20 +18,20 @@ public class ClientController implements ClientApi {
     private final ClientMapper clientMapper;
 
     @Override
-    @PostMapping("/api/clients")
+    @PostMapping("/api/client")
     public ResponseEntity<Client> addClient(@RequestBody Client client) {
         return ResponseEntity.ok().body(clientMapper.clientEntityToModel(clientService.createClient(clientMapper.clientModelToEntity(client))));
     }
 
     @Override
-    @DeleteMapping("/api/clients/{id}")
+    @DeleteMapping("/api/client/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable String id) {
         clientService.deleteClient(id);
         return ResponseEntity.ok().body(null);
     }
 
     @Override
-    @GetMapping("/api/clients/{id}")
+    @GetMapping("/api/client/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable String id) {
         return ResponseEntity.ok().body(clientMapper.clientEntityToModel(clientService.getClient(id)));
     }
@@ -43,8 +43,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    @PutMapping("/api/clients/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable String id, Client client) {
+    @PutMapping("/api/client/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody Client client) {
         return ResponseEntity.ok().body(clientMapper.clientEntityToModel(clientService.updateClient(id, clientMapper.clientModelToEntity(client))));
     }
 }

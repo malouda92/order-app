@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class ProduitServiceImpl implements ProduitService {
 
     @Override
     public Produit createProduit(Produit produit) {
+        produit.setId(UUID.randomUUID().toString());
         return produitRepository.save(produit);
     }
 
